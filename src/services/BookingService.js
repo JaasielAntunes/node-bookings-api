@@ -1,4 +1,4 @@
-import { Booking } from "./booking.js";
+import { Booking } from "../bookings/booking.js";
 
 class BookingService {
   constructor(repo) {

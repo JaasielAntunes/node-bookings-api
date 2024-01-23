@@ -1,27 +1,22 @@
 import { fastify } from "fastify";
-import { BookingRepository } from "./bookings/BookingRepository.js";
-import { BookingService } from "./bookings/BookingService.js";
+import { BookingRepository } from "./repositories/BookingRepository.js";
+import { BookingService } from "./services/BookingService.js";
+import { BookingController } from "./controllers/BookingController.js";
 
 const app = fastify({ logger: true });
 
 const bookingRepository = new BookingRepository();
 const bookingService = new BookingService(bookingRepository);
+const bookingController = new BookingController(bookingService);
 
 app.post("/api/bookings", (req, res) => {
-  const { roomId, guestName, checkInDate, checkOutDate } = req.body;
-  const newBooking = bookingService.createBooking({
-    roomId,
-    guestName,
-    checkInDate,
-    checkOutDate,
-  });
-
-  res.code(201).send({ message: "Reserva criada com sucesso!", newBooking });
+  const { code, body } = bookingController.save(req);
+  res.code(code).send(body);
 });
 
 app.get("/api/bookings", (req, res) => {
-  const bookings = bookingService.findAllBookings();
-  res.send(bookings);
+  const { code, body } = bookingController.index(req);
+  res.code(code).send(body);
 });
 
 export { app };
