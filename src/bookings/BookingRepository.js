@@ -12,4 +12,4 @@ class BookingRepository {
   }
 }
 
-export { BookingRepository }
+export { BookingRepository };

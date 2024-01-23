@@ -10,10 +10,15 @@ class BookingService {
   }
 
   createBooking({ roomId, guestName, checkInDate, checkOutDate }) {
-    const newBooking = new Booking(roomId, guestName, checkInDate, checkOutDate);
+    const newBooking = new Booking(
+      roomId,
+      guestName,
+      checkInDate,
+      checkOutDate
+    );
     this.repo.create(newBooking);
     return newBooking;
   }
 }
 
-export { BookingService }
+export { BookingService };
