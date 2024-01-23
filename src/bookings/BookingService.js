@@ -6,7 +6,12 @@ class BookingService {
   }
 
   findAllBookings() {
-    return this.repo.findAll();
+    const bookings = this.repo.findAll();
+    if (bookings.length === 0) {
+      throw new Error("Não foi encontrada nenhuma reserva cadastrada!");
+    }
+
+    return bookings;
   }
 
   createBooking({ roomId, guestName, checkInDate, checkOutDate }) {
