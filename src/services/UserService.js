@@ -17,7 +17,7 @@ class UserService {
     return user;
   }
 
-  login({ email, password }) {
+  login(email, password) {
     const user = this.repo.findByEmail(email);
     if (!user) throw new Error("Usuário não encontrado!");
 
@@ -29,7 +29,8 @@ class UserService {
       "segredo-jwt",
       { expiresIn: "1d" }
     );
-    
+
+    user.password = undefined;
     return { user, token };
   }
 }
