@@ -11,5 +11,6 @@ CREATE TABLE IF NOT EXISTS Bookings (
   guest_name VARCHAR(255) NOT NULL,
   check_in_date DATE NOT NULL,
   check_out_date DATE NOT NULL,
+  user_id VARCHAR(36),
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );
