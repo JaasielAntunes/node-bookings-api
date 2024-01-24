@@ -22,6 +22,7 @@ class BookingController {
     }
 
     const newBooking = this.service.createBooking({
+      user,
       roomId,
       guestName,
       checkInDate,
@@ -30,7 +31,7 @@ class BookingController {
 
     return {
       code: 201,
-      body: { message: "Reserva criada com sucesso!", newBooking },
+      body: { message: "Reserva criada com sucesso para: " + user.name, newBooking },
     };
   }
 }
