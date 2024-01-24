@@ -17,7 +17,7 @@ class AppInitializer {
     const userService = new UserService(userRepository);
     const authController = new AuthController(userService);
 
-    Routes.defineRoutes(app, bookingController, authController);
+    Routes.defineRoutes(app, bookingController, authController, userService);
     return app;
   }
 }

@@ -10,12 +10,9 @@ class BookingController {
 
   save(req) {
     const { roomId, guestName, checkInDate, checkOutDate } = req.body;
-    const newBooking = this.service.createBooking({
-      roomId,
-      guestName,
-      checkInDate,
-      checkOutDate,
-    });
+    const user = req.user;
+
+    console.log(user);
 
     if (!roomId || !guestName || !checkInDate || !checkOutDate) {
       return {
@@ -23,6 +20,13 @@ class BookingController {
         body: { message: "Todos os campos devem ser informados!" },
       }; 
     }
+
+    const newBooking = this.service.createBooking({
+      roomId,
+      guestName,
+      checkInDate,
+      checkOutDate,
+    });
 
     return {
       code: 201,
