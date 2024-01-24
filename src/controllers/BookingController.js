@@ -31,7 +31,7 @@ class BookingController {
 
     return {
       code: 201,
-      body: { message: "Reserva criada com sucesso para: " + user.name, newBooking },
+      body: { message: "Reserva criada com sucesso para: " + guestName, newBooking },
     };
   }
 }

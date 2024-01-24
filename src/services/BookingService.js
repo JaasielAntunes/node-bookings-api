@@ -14,13 +14,14 @@ class BookingService {
     return bookings;
   }
 
-  createBooking({ roomId, guestName, checkInDate, checkOutDate }) {
-    const newBooking = new Booking(
+  createBooking({ user, roomId, guestName, checkInDate, checkOutDate }) {
+    const newBooking = new Booking({
+      user,
       roomId,
       guestName,
       checkInDate,
-      checkOutDate
-    );
+      checkOutDate,
+    });
 
     const isRoomAvailable = this.repo.findAll().find((booking) => {
       return (
@@ -31,7 +32,7 @@ class BookingService {
     });
 
     if (isRoomAvailable) {
-      throw new Error("Quarto ocupado! Informe outro número de quarto.");
+      throw new Error("Quarto ocupado! Informe outras datas de check-in e check-out.");
     }
 
     this.repo.create(newBooking);
