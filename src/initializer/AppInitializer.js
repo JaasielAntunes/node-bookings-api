@@ -6,6 +6,7 @@ import { UserRepository } from "../repositories/UserRepository.js";
 import { UserService } from "../services/UserService.js";
 import { AuthController } from "../controllers/AuthController.js";
 import { Routes } from "../initializer/Routes.js";
+import { db } from "../database/index.js";
 
 class AppInitializer {
   static initialize() {
