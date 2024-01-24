@@ -3,7 +3,7 @@ class AuthController {
     this.service = service;
   }
 
-  register(req) {
+  async register(req) {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -14,7 +14,7 @@ class AuthController {
     }
 
     try {
-      const user = this.service.register(name, email, password);
+      const user = await this.service.register(name, email, password);
       return { code: 201, body: user };
 
     } catch (e) {
@@ -22,9 +22,14 @@ class AuthController {
     }
   }
 
-  login(req) {
+  async listAllUsers() {
+    const users = await this.service.findAllUsers();
+    return { code: 200, body: { users } };
+  }
+
+  async login(req) {
     const { email, password } = req.body;
-    
+
     if (!email || !password) {
       return {
         code: 400,
@@ -33,9 +38,9 @@ class AuthController {
     }
 
     try {
-      const body = this.service.login(email, password);
+      const body = await this.service.login(email, password);
       return { code: 200, body };
-      
+
     } catch (e) {
       return { code: 400, body: { message: e.message } };
     }

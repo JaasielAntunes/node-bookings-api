@@ -6,11 +6,10 @@ import { UserRepository } from "../repositories/UserRepository.js";
 import { UserService } from "../services/UserService.js";
 import { AuthController } from "../controllers/AuthController.js";
 import { Routes } from "../initializer/Routes.js";
-import { db } from "../database/index.js";
 
 class AppInitializer {
   static initialize() {
-    const app = fastify({ logger: true });
+    const app = fastify();
     const bookingRepository = new BookingRepository();
     const bookingService = new BookingService(bookingRepository);
     const bookingController = new BookingController(bookingService);

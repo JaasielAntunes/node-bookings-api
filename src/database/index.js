@@ -11,6 +11,5 @@ const __dirname = dirname(__filename);
 const filePath = join(__dirname, "create-tables.sql");
 const query = new pgp.QueryFile(filePath);
 db.query(query);
-console.log("Tabela criada com sucesso!");
 
 export { db };

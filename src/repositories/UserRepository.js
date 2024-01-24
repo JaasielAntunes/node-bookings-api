@@ -1,14 +1,37 @@
+import { db } from "../database/index.js";
+import { User } from "../auth/User.js";
+
 class UserRepository {
   constructor() {
-    this.users = [];
+    this.db = db;
   }
 
-  findByEmail(email) {
-    return this.users.find(user => user.email === email);
+  async findByEmail(email) {
+    const storedUser = await this.db.oneOrNone(
+      "select * from Users where email = $1",
+      email
+    );
+
+    return storedUser ? new User(storedUser) : null;
   }
 
-  save(user) {
-    this.users.push(user);
+  async findAll() {
+    const users = await this.db.any("select * from Users");
+    return users;
+  }
+
+  async save(user) {
+    await this.db.none(
+      "insert into Users (id, name, email, password) values ($1, $2, $3, $4)", [
+        user.id,
+        user.name,
+        user.email,
+        user.password
+    ]);
+  }
+
+  async delete(userId) {
+    await this.db.none("delete from Users where id = $1", userId);
   }
 }
 
