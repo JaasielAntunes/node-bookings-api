@@ -1,28 +1,31 @@
 import { v4 as uuidv4 } from "uuid";
-import { format, parse } from "date-fns";
+import { format } from "date-fns";
 
 class Booking {
-  constructor({ id, user, roomId, guestName, checkInDate, checkOutDate }) {
+  constructor({ id, userId, roomId, guestName, checkInDate, checkOutDate }) {
     this.id = id ?? uuidv4();
-    this.user = user;
+    this.userId = userId;
     this.roomId = roomId;
     this.guestName = guestName;
 
-    const parsedCheckInDate = parse(checkInDate, "yyyy-MM-dd", new Date());
-    const parsedCheckOutDate = parse(checkOutDate, "yyyy-MM-dd", new Date());
+    if (checkInDate.length > 10 || checkOutDate.length > 10) {
+      throw new Error(
+        "As datas devem ter no máximo 10 caracteres no formato yyyy-MM-dd"
+      );
+    }
 
-    this.checkInDate = format(parsedCheckInDate, "dd/MM/yyyy");
-    this.checkOutDate = format(parsedCheckOutDate, "dd/MM/yyyy");
+    this.checkInDate = new Date(checkInDate).toISOString().substring(0, 10);
+    this.checkOutDate = new Date(checkOutDate).toISOString().substring(0, 10);
   }
 
   toJSON() {
     return {
       id: this.id,
-      user: this.user,
+      userId: this.userId,
       roomId: this.roomId,
       guestName: this.guestName,
-      checkInDate: this.checkInDate,
-      checkOutDate: this.checkOutDate,
+      checkInDate: format(this.checkInDate, "dd/MM/yyyy"),
+      checkOutDate: format(this.checkOutDate, "dd/MM/yyyy"),
     };
   }
 }
