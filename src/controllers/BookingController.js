@@ -3,16 +3,16 @@ class BookingController {
     this.service = service;
   }
 
-  index() {
-    const bookings = this.service.findAllBookings();
+  async index() {
+    const bookings = await this.service.findAllBookings();
     return { code: 200, body: { bookings } };
   }
 
-  save(req) {
+  async save(req) {
     const { roomId, guestName, checkInDate, checkOutDate } = req.body;
     const user = req.user;
 
-    console.log(user);
+    // console.log(user);
 
     if (!roomId || !guestName || !checkInDate || !checkOutDate) {
       return {
@@ -21,8 +21,8 @@ class BookingController {
       }; 
     }
 
-    const newBooking = this.service.createBooking({
-      user,
+    const newBooking = await this.service.createBooking({
+      userId: user.id,
       roomId,
       guestName,
       checkInDate,

@@ -11,13 +11,13 @@ class Routes {
       },
     };
 
-    app.post("/api/bookings", authenticatedRoute, (req, res) => {
-      const { code, body } = bookingController.save(req);
+    app.post("/api/bookings", authenticatedRoute, async (req, res) => {
+      const { code, body } = await bookingController.save(req);
       res.code(code).send(body);
     });
 
-    app.get("/api/bookings", authenticatedRoute, (req, res) => {
-      const { code, body } = bookingController.index(req);
+    app.get("/api/bookings", authenticatedRoute, async (req, res) => {
+      const { code, body } = await bookingController.index(req);
       res.code(code).send(body);
     });
 

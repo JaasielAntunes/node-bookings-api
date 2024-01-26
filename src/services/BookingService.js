@@ -5,8 +5,8 @@ class BookingService {
     this.repo = repo;
   }
 
-  findAllBookings() {
-    const bookings = this.repo.findAll();
+  async findAllBookings() {
+    const bookings = await this.repo.findAll();
     if (bookings.length === 0) {
       throw new Error("Não foi encontrada nenhuma reserva cadastrada!");
     }
@@ -14,16 +14,17 @@ class BookingService {
     return bookings;
   }
 
-  createBooking({ user, roomId, guestName, checkInDate, checkOutDate }) {
+  async createBooking({ userId, roomId, guestName, checkInDate, checkOutDate }) {
     const newBooking = new Booking({
-      user,
+      userId,
       roomId,
       guestName,
       checkInDate,
       checkOutDate,
     });
 
-    const isRoomAvailable = this.repo.findAll().find((booking) => {
+    const allBookings = await this.repo.findAll();
+    const isRoomAvailable = allBookings.find((booking) => {
       return (
         booking.roomId === newBooking.roomId &&
         booking.checkInDate < newBooking.checkOutDate &&
@@ -35,7 +36,7 @@ class BookingService {
       throw new Error("Quarto ocupado! Informe outras datas de check-in e check-out.");
     }
 
-    this.repo.create(newBooking);
+    await this.repo.create(newBooking);
     return newBooking;
   }
 }
