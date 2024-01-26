@@ -1,4 +1,4 @@
-import { AppInitializer } from './initializer/AppInitializer.js';
+import { AppInitializer } from './initializer/app-initializer.js';
 
 const app = AppInitializer.initialize();
 

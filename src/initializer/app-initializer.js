@@ -5,7 +5,7 @@ import { BookingController } from "../controllers/BookingController.js";
 import { UserRepository } from "../repositories/UserRepository.js";
 import { UserService } from "../services/UserService.js";
 import { AuthController } from "../controllers/AuthController.js";
-import { Routes } from "../initializer/Routes.js";
+import { Routes } from "./routes.js";
 
 class AppInitializer {
   static initialize() {
