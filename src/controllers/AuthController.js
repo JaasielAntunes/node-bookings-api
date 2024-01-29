@@ -22,6 +22,18 @@ class AuthController {
     }
   }
 
+  async delete(req) {
+    const { userId } = req.params;
+
+    try {
+      const result = await this.service.delete(userId);
+      return { code: result.code, body: { message: result.body.message } };
+
+    } catch (e) {
+      return { code: 400, body: { message: e.message } };
+    }
+  }
+
   async listAllUsers() {
     const users = await this.service.findAllUsers();
     return { code: 200, body: { users } };

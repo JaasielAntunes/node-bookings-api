@@ -35,6 +35,11 @@ class Routes {
       const { code, body } = await authController.listAllUsers(req);
       res.status(code).send(body);
     });
+
+    app.delete("/api/user/delete/:userId", async (req, res) => {
+      const { code, body } = await authController.delete(req);
+      res.code(code).send(body);
+    });
   }
 }
 

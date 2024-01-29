@@ -15,6 +15,11 @@ class UserRepository {
     return storedUser ? new User(storedUser) : null;
   }
 
+  async findById(userId) {
+    const user = await this.db.oneOrNone("select * from Users where id = $1", userId);
+    return user ? new User(user) : null;
+  }
+
   async findAll() {
     const users = await this.db.any("select * from Users");
     return users;
@@ -31,7 +36,7 @@ class UserRepository {
   }
 
   async delete(userId) {
-    await this.db.none("delete from Users where id = $1", userId);
+    await this.db.none("delete from Users where id = $1", [userId]);
   }
 }
 
