@@ -16,7 +16,10 @@ class UserRepository {
   }
 
   async findById(userId) {
-    const user = await this.db.oneOrNone("select * from Users where id = $1", userId);
+    const user = await this.db.oneOrNone(
+      "select * from Users where id = $1",
+      userId
+    );
     return user ? new User(user) : null;
   }
 
@@ -27,16 +30,37 @@ class UserRepository {
 
   async save(user) {
     await this.db.none(
-      "insert into Users (id, name, email, password) values ($1, $2, $3, $4)", [
-        user.id,
-        user.name,
-        user.email,
-        user.password
-    ]);
+      "insert into Users (id, name, email, password) values ($1, $2, $3, $4)",
+      [user.id, user.name, user.email, user.password]
+    );
   }
 
   async delete(userId) {
     await this.db.none("delete from Users where id = $1", [userId]);
+  }
+
+  async update(userId, updatedData) {
+    try {
+      const query =
+        "update Users set name = $2, email = $3, password = $4 where id = $1";
+      await this.db.none(query, [
+        userId,
+        updatedData.name,
+        updatedData.email,
+        updatedData.password,
+      ]);
+
+      return {
+        code: 200,
+        body: { message: "Usuário atualizado com sucesso!" },
+      };
+
+    } catch (e) {
+      return {
+        code: 400,
+        body: { message: "Falha ao atualizar o usuário: " + e.message },
+      };
+    }
   }
 }
 

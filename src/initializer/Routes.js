@@ -36,10 +36,15 @@ class Routes {
       res.status(code).send(body);
     });
 
-    app.delete("/api/user/delete/:userId", async (req, res) => {
+    app.delete("/api/user/delete/:userId", authenticatedRoute, async (req, res) => {
       const { code, body } = await authController.delete(req);
       res.code(code).send(body);
     });
+
+    app.put("/api/user/update/:userId", authenticatedRoute, async (req, res) => {
+      const { code, body } = await authController.update(req, res);
+      res.code(code).send(body);
+    })
   }
 }
 

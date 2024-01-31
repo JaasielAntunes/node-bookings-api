@@ -43,6 +43,37 @@ class UserService {
     return users;
   }
 
+  async update(userId, updatedData) {
+    const { password, ...otherData } = updatedData;
+  
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updatedData.password = hashedPassword;
+    }
+  
+    try {
+      const user = await this.repo.findById(userId);
+      if (!user) {
+        throw new Error("Usuário não encontrado!");
+      }
+  
+      const updatedUser = await this.repo.update(userId, updatedData);
+  
+      if (updatedUser) {
+        return {
+          code: 200,
+          body: { message: "Usuário atualizado com sucesso!", user: updatedUser },
+        };
+      }
+  
+    } catch (e) {
+      return {
+        code: 400,
+        body: { message: "Falha ao atualizar o usuário: " + e.message },
+      };
+    }
+  }
+
   async login(email, password) {
     const user = await this.repo.findByEmail(email);
     if (!user) throw new Error("Email ou senha inválidos!");

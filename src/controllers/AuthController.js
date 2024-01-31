@@ -16,7 +16,6 @@ class AuthController {
     try {
       const user = await this.service.register(name, email, password);
       return { code: 201, body: user };
-
     } catch (e) {
       return { code: 400, body: { message: e.message } };
     }
@@ -31,6 +30,21 @@ class AuthController {
 
     } catch (e) {
       return { code: 400, body: { message: e.message } };
+    }
+  }
+
+  async update(req, res) {
+    const userId = req.params.userId;
+    const updatedData = req.body;
+
+    try {
+      const result = await this.service.update(userId, updatedData);
+      return { code: result.code, body: result.body };
+
+    } catch (e) {
+      res
+        .status(500)
+        .json({ message: "Erro interno do servidor: " + e.message });
     }
   }
 
@@ -52,7 +66,6 @@ class AuthController {
     try {
       const body = await this.service.login(email, password);
       return { code: 200, body };
-
     } catch (e) {
       return { code: 400, body: { message: e.message } };
     }
