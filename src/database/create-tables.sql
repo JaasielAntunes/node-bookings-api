@@ -12,5 +12,5 @@ CREATE TABLE IF NOT EXISTS Bookings (
   check_in_date DATE NOT NULL,
   check_out_date DATE NOT NULL,
   user_id VARCHAR(36),
-  FOREIGN KEY (user_id) REFERENCES Users(id)
+  FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
 );
