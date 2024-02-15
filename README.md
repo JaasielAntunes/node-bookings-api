@@ -15,10 +15,10 @@ Após a conclusão do desenvolvimento da API, por autonomia própria implementei
 
 ---
 
-# Pré-requisitos
+# Requisitos
 
 - Node.js versão 20 ou superior;
-- Banco de dados PostgreSQL.
+- PostgreSQL.
 
 ---
 
